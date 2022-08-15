@@ -27,6 +27,18 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const updateShelf = (shelf, target, book) => {
+    //updating the shelf in the backend
+    books.update(book, target);
+
+    //updating the shelf in the frontend
+    const shelfUpdate = { ...shelves };
+    shelfUpdate[target].push(book);
+    const index = shelfUpdate[shelf].findIndex((item) => item.id === book.id);
+    shelfUpdate[shelf].splice(index, 1);
+    setShelves(shelfUpdate);
+  };
+
   return (
     <div className="app">
       <Routes>
@@ -44,12 +56,18 @@ function App() {
                   <BookShelf
                     shelfName="Currently Reading"
                     books={shelves.currentlyReading}
+                    update={updateShelf}
                   />
                   <BookShelf
                     shelfName="Want To Read"
                     books={shelves.wantToRead}
+                    update={updateShelf}
                   />
-                  <BookShelf shelfName="Read" books={shelves.read} />
+                  <BookShelf
+                    shelfName="Read"
+                    books={shelves.read}
+                    update={updateShelf}
+                  />
                 </div>
               </div>
               <div className="open-search">

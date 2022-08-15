@@ -1,4 +1,13 @@
-const Book = ({ imgurl, title, authors }) => {
+const Book = ({ book, shelfName, imgurl, title, authors, update }) => {
+  const shelfSelected =
+    shelfName.charAt(0).toLowerCase() + shelfName.split(" ").join("").slice(1);
+
+  const handleChange = (e) => {
+    if (e.target.value !== "none") {
+      update(shelfSelected, e.target.value, book);
+    }
+  };
+
   return (
     <div className="book">
       <div className="book-top">
@@ -11,7 +20,7 @@ const Book = ({ imgurl, title, authors }) => {
           }}
         ></div>
         <div className="book-shelf-changer">
-          <select>
+          <select onChange={handleChange} defaultValue={shelfSelected}>
             <option value="none" disabled>
               Move to...
             </option>
