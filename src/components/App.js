@@ -17,9 +17,9 @@ function App() {
       const items = await books.getAll();
       //Assigning each item to its shelf
       items.forEach((item) => {
-        const shelfName = item.shelf;
-        shelves[shelfName] = [...shelves[shelfName], item];
-        setShelves(shelves);
+        var newShelves = { ...shelves };
+        newShelves[item.shelf].push(item);
+        setShelves(newShelves);
       });
     };
 
@@ -41,15 +41,9 @@ function App() {
               </div>
               <div className="list-books-content">
                 <div>
-                  <BookShelf
-                    shelfName="Currently Reading"
-                    books={shelves.currentlyReading}
-                  />
-                  <BookShelf
-                    shelfName="Want to Read"
-                    books={shelves.wantToRead}
-                  />
-                  <BookShelf shelfName="Read" books={shelves.read} />
+                  <BookShelf shelfName="Currently Reading" state={shelves} />
+                  <BookShelf shelfName="Want To Read" state={shelves} />
+                  <BookShelf shelfName="Read" state={shelves} />
                 </div>
               </div>
               <div className="open-search">

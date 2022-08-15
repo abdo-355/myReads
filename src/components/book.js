@@ -25,7 +25,7 @@ const Book = ({ imgurl, title, authors }) => {
       <div className="book-title">{title}</div>
       <div className="book-authors">
         {authors.map((author) => (
-          <span>{author}, </span>
+          <span key={author}>{author}, </span>
         ))}
       </div>
     </div>
