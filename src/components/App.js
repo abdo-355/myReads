@@ -6,25 +6,25 @@ import SearchPage from "./searchPage";
 import BookShelf from "./bookShelf";
 
 function App() {
-  const [currentlyReading, setCurrentlyReading] = useState([]);
-  const [wantToRead, setWantToRead] = useState([]);
-  const [read, setRead] = useState([]);
+  const [shelves, setShelves] = useState({
+    currentlyReading: [],
+    wantToRead: [],
+    read: [],
+  });
 
   useEffect(() => {
     const getData = async () => {
       const items = await books.getAll();
+      //Assigning each item to its shelf
       items.forEach((item) => {
-        if (items.shelf === "currentlyReading") {
-          setCurrentlyReading([...currentlyReading, item]);
-        } else if (items.shelf === "wantToRead") {
-          setWantToRead([...wantToRead, item]);
-        } else {
-          setRead([...read, item]);
-        }
+        const shelfName = item.shelf;
+        shelves[shelfName] = [...shelves[shelfName], item];
+        setShelves(shelves);
       });
     };
 
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -43,10 +43,13 @@ function App() {
                 <div>
                   <BookShelf
                     shelfName="Currently Reading"
-                    items={currentlyReading}
+                    books={shelves.currentlyReading}
                   />
-                  <BookShelf shelfName="Want to Read" items={wantToRead} />
-                  <BookShelf shelfName="Read" items={read} />
+                  <BookShelf
+                    shelfName="Want to Read"
+                    books={shelves.wantToRead}
+                  />
+                  <BookShelf shelfName="Read" books={shelves.read} />
                 </div>
               </div>
               <div className="open-search">
