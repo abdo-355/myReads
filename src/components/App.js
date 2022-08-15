@@ -41,9 +41,15 @@ function App() {
               </div>
               <div className="list-books-content">
                 <div>
-                  <BookShelf shelfName="Currently Reading" state={shelves} />
-                  <BookShelf shelfName="Want To Read" state={shelves} />
-                  <BookShelf shelfName="Read" state={shelves} />
+                  <BookShelf
+                    shelfName="Currently Reading"
+                    books={shelves.currentlyReading}
+                  />
+                  <BookShelf
+                    shelfName="Want To Read"
+                    books={shelves.wantToRead}
+                  />
+                  <BookShelf shelfName="Read" books={shelves.read} />
                 </div>
               </div>
               <div className="open-search">
