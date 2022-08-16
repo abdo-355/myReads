@@ -1,6 +1,7 @@
 const Book = ({ book, shelfName, imgurl, title, authors, update }) => {
-  const shelfSelected =
-    shelfName.charAt(0).toLowerCase() + shelfName.split(" ").join("").slice(1);
+  const shelfSelected = shelfName
+    ? shelfName.charAt(0).toLowerCase() + shelfName.split(" ").join("").slice(1)
+    : null;
 
   const handleChange = (e) => {
     if (e.target.value !== "none") {
@@ -33,9 +34,9 @@ const Book = ({ book, shelfName, imgurl, title, authors, update }) => {
       </div>
       <div className="book-title">{title}</div>
       <div className="book-authors">
-        {authors.map((author) => (
-          <span key={author}>{author}, </span>
-        ))}
+        {authors
+          ? authors.map((author) => <span key={author}>{author}, </span>)
+          : ""}
       </div>
     </div>
   );
