@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const Book = ({ book, shelfName, imgurl, title, authors, update }) => {
   const shelf = shelfName
     ? shelfName.charAt(0).toLowerCase() + shelfName.split(" ").join("").slice(1)
@@ -41,6 +43,15 @@ const Book = ({ book, shelfName, imgurl, title, authors, update }) => {
       </div>
     </div>
   );
+};
+
+Book.propTypes = {
+  Book: PropTypes.object,
+  update: PropTypes.func.isRequired,
+  title: PropTypes.string,
+  shelfName: PropTypes.string,
+  imgurl: PropTypes.string,
+  authors: PropTypes.array,
 };
 
 export default Book;

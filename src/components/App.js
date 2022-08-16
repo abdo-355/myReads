@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import * as books from "../utils/BooksAPI";
 import "../styles/App.css";
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import SearchPage from "./searchPage";
 import Shelves from "./shelves";
 
@@ -27,8 +27,6 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const navigate = useNavigate();
-
   const updateShelf = (shelf, target, book) => {
     //updating the shelf in the backend
     books.update(book, target);
@@ -44,8 +42,6 @@ function App() {
       shelfUpdate[target].push(book);
     }
     setShelves(shelfUpdate);
-
-    navigate("/");
   };
   return (
     <div className="app">
@@ -53,7 +49,7 @@ function App() {
         <Route
           exact
           path="/search"
-          element={<SearchPage updateShelf={updateShelf} />}
+          element={<SearchPage shelves={shelves} updateShelf={updateShelf} />}
         />
         <Route
           exact
