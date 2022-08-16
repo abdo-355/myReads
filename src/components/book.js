@@ -1,12 +1,10 @@
 const Book = ({ book, shelfName, imgurl, title, authors, update }) => {
-  const shelfSelected = shelfName
+  const shelf = shelfName
     ? shelfName.charAt(0).toLowerCase() + shelfName.split(" ").join("").slice(1)
     : null;
 
   const handleChange = (e) => {
-    if (e.target.value !== "none") {
-      update(shelfSelected, e.target.value, book);
-    }
+    update(shelf, e.target.value, book);
   };
 
   return (
@@ -21,7 +19,10 @@ const Book = ({ book, shelfName, imgurl, title, authors, update }) => {
           }}
         ></div>
         <div className="book-shelf-changer">
-          <select onChange={handleChange} defaultValue={shelfSelected}>
+          <select
+            onChange={handleChange}
+            defaultValue={shelfName !== undefined ? shelf : "none"}
+          >
             <option value="none" disabled>
               Move to...
             </option>

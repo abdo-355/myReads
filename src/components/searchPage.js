@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import * as books from "../utils/BooksAPI";
 import Book from "./book";
 
-const SearchPage = () => {
+const SearchPage = ({ updateShelf }) => {
   const [value, setValue] = useState("");
   const [bookList, setBookList] = useState({});
 
@@ -52,9 +52,12 @@ const SearchPage = () => {
             <li key={book.id}>
               <Book
                 book={book}
-                imgurl={book.imageLinks.smallThumbnail}
+                imgurl={
+                  book.imageLinks !== undefined &&
+                  book.imageLinks.smallThumbnail
+                }
                 title={book.title}
-                authors={book.authors}
+                update={updateShelf}
               />
             </li>
           ))}
