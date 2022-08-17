@@ -39,6 +39,7 @@ function App() {
       shelfUpdate[shelf] = shelfUpdate[shelf].filter((item) => item !== found);
     }
     if (target !== "none") {
+      book.shelf = target;
       shelfUpdate[target].push(book);
     }
     setShelves(shelfUpdate);
