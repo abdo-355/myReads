@@ -27,7 +27,20 @@ const SearchPage = ({ shelves, updateShelf }) => {
       if (value !== "") {
         const res = await books.search(value);
         if (res.error !== "empty query") {
-          setBookList(res);
+          const booksWithShelves = res.map((book) => {
+            if (!shelvesArray.some((element) => element.id === book.id)) {
+              book.shelf = "none";
+              return book;
+            } else {
+              const bookwithShelfName = shelvesArray.filter(
+                (element) => element.id === book.id
+              );
+              const updatedBook = bookwithShelfName[0];
+              return updatedBook;
+            }
+          });
+
+          setBookList(booksWithShelves);
         } else {
           setBookList({});
         }
@@ -37,6 +50,7 @@ const SearchPage = ({ shelves, updateShelf }) => {
     };
 
     getDate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   return (
@@ -62,14 +76,12 @@ const SearchPage = ({ shelves, updateShelf }) => {
                 book={book}
                 update={updateShelf}
                 imgurl={
-                  book.imageLinks !== undefined &&
-                  book.imageLinks.smallThumbnail
+                  book.imageLinks !== undefined
+                    ? book.imageLinks.smallThumbnail
+                    : ""
                 }
                 title={book.title}
-                shelfName={
-                  shelvesArray.some((obj) => obj.id === book.id) &&
-                  shelvesArray.find((element) => element.id === book.id).shelf
-                }
+                shelfName={book.shelf}
                 authors={book.authors}
               />
             </li>

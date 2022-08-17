@@ -34,9 +34,9 @@ function App() {
     //updating the shelf in the frontend
     const shelfUpdate = { ...shelves };
 
-    if (shelf) {
-      const index = shelfUpdate[shelf].findIndex((item) => item.id === book.id);
-      shelfUpdate[shelf].splice(index, 1);
+    if (shelf !== "none") {
+      const found = shelfUpdate[shelf].find((item) => item.id === book.id);
+      shelfUpdate[shelf] = shelfUpdate[shelf].filter((item) => item !== found);
     }
     if (target !== "none") {
       shelfUpdate[target].push(book);

@@ -1,9 +1,11 @@
 import PropTypes from "prop-types";
 
 const Book = ({ book, shelfName, imgurl, title, authors, update }) => {
-  const shelf = shelfName
-    ? shelfName.charAt(0).toLowerCase() + shelfName.split(" ").join("").slice(1)
-    : null;
+  const shelf =
+    shelfName === "none"
+      ? "none"
+      : shelfName.charAt(0).toLowerCase() +
+        shelfName.split(" ").join("").slice(1);
 
   const handleChange = (e) => {
     update(shelf, e.target.value, book);
@@ -21,13 +23,8 @@ const Book = ({ book, shelfName, imgurl, title, authors, update }) => {
           }}
         ></div>
         <div className="book-shelf-changer">
-          <select
-            onChange={handleChange}
-            defaultValue={shelfName !== undefined ? shelf : "none"}
-          >
-            <option value="none" disabled>
-              Move to...
-            </option>
+          <select onChange={handleChange} defaultValue={shelf}>
+            <option disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
             <option value="read">Read</option>
